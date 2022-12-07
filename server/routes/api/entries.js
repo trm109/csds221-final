@@ -6,7 +6,7 @@ console.log("mongodb: ", mongodb);
 const dbConnectionUrl = "mongodb+srv://geotalk:a4WgEpScBUD3fa5M@geotalk.68jkjje.mongodb.net/?retryWrites=true&w=majority";
 
 
-// get Post
+// get Posts
 
 router.get('/', async (req, res) => {
 	console.log("get received")
