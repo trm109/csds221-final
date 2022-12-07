@@ -9,28 +9,23 @@ const dbConnectionUrl = "mongodb+srv://geotalk:a4WgEpScBUD3fa5M@geotalk.68jkjje.
 // get Post
 
 router.get('/', async (req, res) => {
-	await loadPostsCollection(function(dbCollection){
-			dbCollection.find().toArray(function(err, result){
-				res.send(result);
-			});
-
-		});
-
-	});
+	const entries = await loadPostsCollection();
+	res.send(await entries.find({}).toArray());
+});
 
 // add Post
- 
+
 router.post('/', async (req, res) => {
 	await loadPostsCollection(function(dbCollection){
-		 dbCollection.insertOne({
+		dbCollection.insertOne({
 			text: req.body.text,
 			health: 1,
-			 
+			
 		});
-	
+		
 	});
 	res.status(201).send();
-
+	
 });
 
 //delete Post
@@ -52,7 +47,7 @@ router.delete("/:id", async(req, res)=> {
 			}
 		});
 	});
-
+	
 	res.status(200).send();
 	
 });
@@ -73,17 +68,13 @@ router.patch("/:id", async(req, res)=> {
 });
 
 // get the collection from a database 
- 
-async function loadPostsCollection(
-    successCallback){
-	//Connects to database and returns the collection 'entries
-	mongodb.MongoClient.connect(dbConnectionUrl, {useUnifiedTopology: true}, function(err, db){
-		if (err) throw err;
-		var dbo = db.db("geotalk");
-		var dbCollection = dbo.collection("entries");
-		successCallback(dbCollection);
-	});
+
+async function loadPostsCollection() {
+	const client = await mongodb.MongoClient.connect( dbConnectionUrl, {useNewUrlParser: true});
+		
+	return client.db('geotalk').collection('entries');
 }
-
-module.exports = router;
-
+	
+	module.exports = router;
+	
+	
