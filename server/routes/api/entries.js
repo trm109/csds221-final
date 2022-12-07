@@ -82,7 +82,7 @@ async function loadPostsCollection(
 		var dbo = db.db("geotalk");
 		var dbCollection = dbo.collection("entries");
 		successCallback(dbCollection);
-	}
+	});
 }
 
 module.exports = router;
