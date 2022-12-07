@@ -9,6 +9,7 @@ const dbConnectionUrl = "mongodb+srv://geotalk:a4WgEpScBUD3fa5M@geotalk.68jkjje.
 // get Post
 
 router.get('/', async (req, res) => {
+	console.log("get received")
 	const entries = await loadPostsCollection();
 	res.send(await entries.find({}).toArray());
 });
@@ -71,10 +72,9 @@ router.patch("/:id", async(req, res)=> {
 
 async function loadPostsCollection() {
 	const client = await mongodb.MongoClient.connect( dbConnectionUrl, {useNewUrlParser: true});
-		
+	
 	return client.db('geotalk').collection('entries');
 }
-	
-	module.exports = router;
-	
-	
+
+module.exports = router;
+
