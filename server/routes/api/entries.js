@@ -2,8 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const mongodb = require("mongodb");
-
-
+console.log("mongodb: ", mongodb);
 const dbConnectionUrl = "mongodb+srv://geotalk:a4WgEpScBUD3fa5M@geotalk.68jkjje.mongodb.net/?retryWrites=true&w=majority";
 
 
@@ -74,15 +73,16 @@ router.patch("/:id", async(req, res)=> {
 });
 
 // get the collection from a database 
+ 
 async function loadPostsCollection(
     successCallback){
-	mongodb.MongoClient.connect(dbConnectionUrl,function(err, dbInstance){
-			const dbObject = dbInstance.db('geotalk');
-        		const dbCollection = dbObject.collection('entries');
-            		console.log("[MongoDB connection] SUCCESS");
-			successCallback(dbCollection);
+	//Connects to database and returns the collection 'entries
+	mongodb.MongoClient.connect(dbConnectionUrl, {useUnifiedTopology: true}, function(err, db){
+		if (err) throw err;
+		var dbo = db.db("geotalk");
+		var dbCollection = dbo.collection("entries");
+		successCallback(dbCollection);
 	});
-
 }
 
 module.exports = router;
