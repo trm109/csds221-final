@@ -77,6 +77,7 @@ router.patch("/:id", async(req, res)=> {
 async function loadPostsCollection(
     successCallback){
 	mongodb.MongoClient.connect(dbConnectionUrl,function(err, dbInstance){
+			console.log("dbInstance: ", dbInstance);
 			const dbObject = dbInstance.db('test');
         		const dbCollection = dbObject.collection('posts');
             		console.log("[MongoDB connection] SUCCESS");
