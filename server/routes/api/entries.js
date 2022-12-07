@@ -73,17 +73,16 @@ router.patch("/:id", async(req, res)=> {
 });
 
 // get the collection from a database 
- 
-async function loadPostsCollection(
-    successCallback){
-	//Connects to database and returns the collection 'entries
-	mongodb.MongoClient.connect(dbConnectionUrl, {useUnifiedTopology: true}, function(err, db){
-		if (err) throw err;
-		var dbo = db.db("geotalk");
-		var dbCollection = dbo.collection("entries");
-		successCallback(dbCollection);
-	});
-}
+async function loadPostsCollection() {
+	const client = await mongodb.MongoClient.connect(
+	  dbConnectionUrl,
+	  {
+		useNewUrlParser: true
+	  }
+	);
+  
+	return client.db('geotalk').collection('entries');
+  }
 
 module.exports = router;
 
