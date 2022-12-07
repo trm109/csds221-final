@@ -76,14 +76,13 @@ router.patch("/:id", async(req, res)=> {
  
 async function loadPostsCollection(
     successCallback){
-	mongodb.MongoClient.connect(dbConnectionUrl,function(err, dbInstance){
-			console.log("dbInstance: ", dbInstance);
-			const dbObject = dbInstance.db('test');
-        		const dbCollection = dbObject.collection('posts');
-            		console.log("[MongoDB connection] SUCCESS");
-			successCallback(dbCollection);
-	});
-
+	//Connects to database and returns the collection 'entries
+	mongodb.MongoClient.connect(dbConnectionUrl, {useUnifiedTopology: true}, function(err, db){
+		if (err) throw err;
+		var dbo = db.db("geotalk");
+		var dbCollection = dbo.collection("entries");
+		successCallback(dbCollection);
+	}
 }
 
 module.exports = router;
