@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const mongodb = require("mongodb");
-
+console.log("mongodb: ", mongodb);
 const dbConnectionUrl = "mongodb+srv://geotalk:a4WgEpScBUD3fa5M@geotalk.68jkjje.mongodb.net/?retryWrites=true&w=majority";
 
 
