@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 	const entries = await loadPostsCollection();
 	res.send(await entries.find({}).toArray());
 });
-
+/*
 // add Post
 
 router.post('/', async (req, res) => {
@@ -67,7 +67,7 @@ router.patch("/:id", async(req, res)=> {
 	});
 	res.status(200).send();
 });
-
+*/
 // get the collection from a database 
 
 async function loadPostsCollection() {
